@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+    boolean existsByBlogUrl(String blogUrl);
+
     List<Review> findByRestaurantOrderByCrawledAtDesc(Restaurant restaurant);
 
     long countByRestaurant(Restaurant restaurant);

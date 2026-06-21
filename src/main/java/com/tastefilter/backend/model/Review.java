@@ -21,7 +21,7 @@ public class Review {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, unique = true, length = 1000)
     private String blogUrl;
 
     @Column(columnDefinition = "TEXT")
@@ -36,6 +36,40 @@ public class Review {
 
     @Column(name = "crawled_at", updatable = false)
     private LocalDateTime crawledAt;
+
+    private Review(
+            Restaurant restaurant,
+            String blogUrl,
+            String contentSnippet,
+            Integer trustScore,
+            boolean hasReceiptAuth,
+            boolean isEventSuspected
+    ) {
+        this.restaurant = restaurant;
+        this.blogUrl = blogUrl;
+        this.contentSnippet = contentSnippet;
+        this.trustScore = trustScore;
+        this.hasReceiptAuth = hasReceiptAuth;
+        this.isEventSuspected = isEventSuspected;
+    }
+
+    public static Review create(
+            Restaurant restaurant,
+            String blogUrl,
+            String contentSnippet,
+            Integer trustScore,
+            boolean hasReceiptAuth,
+            boolean isEventSuspected
+    ) {
+        return new Review(
+                restaurant,
+                blogUrl,
+                contentSnippet,
+                trustScore,
+                hasReceiptAuth,
+                isEventSuspected
+        );
+    }
 
     @PrePersist
     protected void onCreate() {

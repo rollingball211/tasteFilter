@@ -39,6 +39,33 @@ public class Restaurant {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    private Restaurant(
+            String name,
+            Region region,
+            FoodCategory category,
+            String naverPlaceId,
+            Integer instaHashtagCount,
+            Integer viralIndex
+    ) {
+        this.name = name;
+        this.region = region;
+        this.category = category;
+        this.naverPlaceId = naverPlaceId;
+        this.instaHashtagCount = instaHashtagCount;
+        this.viralIndex = viralIndex;
+    }
+
+    public static Restaurant create(
+            String name,
+            Region region,
+            FoodCategory category,
+            String naverPlaceId,
+            Integer instaHashtagCount,
+            Integer viralIndex
+    ) {
+        return new Restaurant(name, region, category, naverPlaceId, instaHashtagCount, viralIndex);
+    }
+
     // Entity가 처음 DB에 저장될 때 자동으로 현재 시간을 세팅합니다.
     @PrePersist
     protected void onCreate() {
