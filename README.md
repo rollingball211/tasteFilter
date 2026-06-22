@@ -35,3 +35,14 @@ REST API 서버입니다.
 POSTGRES_USER=your_db_username
 POSTGRES_PASSWORD=your_db_password
 POSTGRES_DB=taste_filter
+NAVER_CLIENT_ID=your_naver_client_id
+NAVER_CLIENT_SECRET=your_naver_client_secret
+```
+
+## 5. 개발 진행 기록
+
+### 2026-06-22
+
+* 네이버 개발자센터에서 검색 API 애플리케이션을 등록했습니다.
+* `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`을 환경변수로 분리했습니다.
+* 네이버 블로그 검색 API에 `성수 한식 맛집`을 요청해 HTTP 200 응답과 검색 결과 반환을 확인했습니다.
