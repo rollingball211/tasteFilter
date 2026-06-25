@@ -45,6 +45,11 @@ public class ReviewService {
         );
     }
 
+    // 상세 페이지를 가져오기 전에 이미 저장된 URL인지 확인해 불필요한 네트워크 요청을 줄인다.
+    public boolean existsByBlogUrl(String blogUrl) {
+        return reviewRepository.existsByBlogUrl(blogUrl);
+    }
+
     // 동일한 블로그 URL의 재수집을 건너뛰고, 저장 여부를 Optional로 명확하게 전달한다.
     @Transactional
     public Optional<Review> saveIfNotExists(
