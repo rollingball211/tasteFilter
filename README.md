@@ -46,3 +46,12 @@ NAVER_CLIENT_SECRET=your_naver_client_secret
 * 네이버 개발자센터에서 검색 API 애플리케이션을 등록했습니다.
 * `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`을 환경변수로 분리했습니다.
 * 네이버 블로그 검색 API에 `성수 한식 맛집`을 요청해 HTTP 200 응답과 검색 결과 반환을 확인했습니다.
+
+### 2026-06-25
+
+* 네이버 블로그 검색 API 연동 코드를 추가하고, 검색 결과를 `CrawledReview` 후보 데이터로 변환하도록 구성했습니다.
+* 검색 API는 본문 전체를 제공하지 않으므로, Jsoup 기반 `NaverBlogPostParser`를 추가해 네이버 블로그 상세 본문을 가져오도록 했습니다.
+* 블로그 상세 페이지의 `mainFrame`, `se-main-container`, `postViewArea` 구조를 확인하고 본문 추출 기준을 정리했습니다.
+* `ReviewFilterService`를 통해 협찬/광고/체험단/리뷰 이벤트 문구를 판별하고, 통과한 리뷰만 저장하도록 서비스 흐름을 구성했습니다.
+* `NaverBlogCrawlOrchestrator`를 추가해 검색 후보 조회, 중복 URL 스킵, 상세 파싱, 필터링, 저장 결과 집계를 한 번에 실행할 수 있게 했습니다.
+* 크롤링 실행 결과를 확인하기 위해 `CrawlCandidateSearchResult`, `CrawlIngestionResult` DTO를 추가했습니다.
