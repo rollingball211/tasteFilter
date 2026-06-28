@@ -26,8 +26,11 @@ public class SearchQueryFactory {
             FoodCategory.ETC, "음식"
     );
 
-    // Enum을 검색용 한글 키워드로 변환해 검색어 생성 규칙이 여러 클래스에 흩어지지 않게 한다.
-    public String create(Region region, FoodCategory category) {
+    // 식당명을 포함해 같은 지역과 카테고리의 다른 식당 리뷰가 섞일 가능성을 줄인다.
+    public String create(String restaurantName, Region region, FoodCategory category) {
+        if (restaurantName == null || restaurantName.isBlank()) {
+            throw new IllegalArgumentException("restaurantName must not be blank");
+        }
         if (region == null) {
             throw new IllegalArgumentException("region must not be null");
         }
@@ -35,8 +38,9 @@ public class SearchQueryFactory {
             throw new IllegalArgumentException("category must not be null");
         }
 
-        return "%s %s 맛집".formatted(
+        return "%s %s %s 맛집".formatted(
                 REGION_KEYWORDS.get(region),
+                restaurantName.trim(),
                 CATEGORY_KEYWORDS.get(category)
         );
     }

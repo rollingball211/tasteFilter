@@ -6,6 +6,8 @@ import com.tastefilter.backend.dto.ReviewFilterResult;
 import com.tastefilter.backend.model.Restaurant;
 import com.tastefilter.backend.model.Review;
 import com.tastefilter.backend.repository.ReviewRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +81,14 @@ public class ReviewService {
     // API에서 최신 리뷰를 바로 제공할 수 있도록 크롤링 시각 내림차순 조회를 사용한다.
     public List<Review> getLatestReviews(Restaurant restaurant) {
         return reviewRepository.findByRestaurantOrderByCrawledAtDesc(restaurant);
+    }
+
+    // 조회 API가 리뷰 전체를 메모리에 올리지 않도록 DB 단계에서 최신순 페이지를 잘라 가져온다.
+    public Page<Review> getLatestReviews(Long restaurantId, int page, int size) {
+        return reviewRepository.findByRestaurantIdOrderByCrawledAtDesc(
+                restaurantId,
+                PageRequest.of(page, size)
+        );
     }
 
     // 리뷰 수 집계를 DB에 맡겨 전체 리뷰 목록을 메모리에 불러오지 않게 한다.

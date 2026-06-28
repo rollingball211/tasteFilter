@@ -32,6 +32,7 @@ public class NaverBlogCrawlOrchestrator {
     public CrawlIngestionResult crawlForRestaurant(Long restaurantId) {
         Restaurant restaurant = restaurantService.getById(restaurantId);
         CrawlCandidateSearchResult searchResult = candidateService.search(
+                restaurant.getName(),
                 restaurant.getRegion(),
                 restaurant.getCategory()
         );

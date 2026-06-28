@@ -27,8 +27,12 @@ public class NaverBlogCandidateService {
     }
 
     // 검색 API 결과는 본문이 아니므로 저장하지 않고 상세 분석 대기 후보로만 변환한다.
-    public CrawlCandidateSearchResult search(Region region, FoodCategory category) {
-        String query = queryFactory.create(region, category);
+    public CrawlCandidateSearchResult search(
+            String restaurantName,
+            Region region,
+            FoodCategory category
+    ) {
+        String query = queryFactory.create(restaurantName, region, category);
         NaverBlogSearchResponse response = searchClient.searchLatest(query);
 
         if (response == null) {

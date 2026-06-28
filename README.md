@@ -55,3 +55,18 @@ NAVER_CLIENT_SECRET=your_naver_client_secret
 * `ReviewFilterService`를 통해 협찬/광고/체험단/리뷰 이벤트 문구를 판별하고, 통과한 리뷰만 저장하도록 서비스 흐름을 구성했습니다.
 * `NaverBlogCrawlOrchestrator`를 추가해 검색 후보 조회, 중복 URL 스킵, 상세 파싱, 필터링, 저장 결과 집계를 한 번에 실행할 수 있게 했습니다.
 * 크롤링 실행 결과를 확인하기 위해 `CrawlCandidateSearchResult`, `CrawlIngestionResult` DTO를 추가했습니다.
+
+### 2026-06-27
+
+* 특정 식당의 크롤링 파이프라인을 직접 실행하는 관리자용 수동 API를 추가했습니다.
+* 식당 ID를 받아 `NaverBlogCrawlOrchestrator`를 호출하고 후보, 중복, 저장, 거절, 실패 건수를 반환하도록 구성했습니다.
+* 검색어에 식당명을 포함해 같은 지역과 음식 카테고리의 다른 식당 리뷰가 섞일 가능성을 낮췄습니다.
+* 존재하지 않는 식당 ID는 `404 Not Found`로 응답하도록 관리자 API 예외 처리를 추가했습니다.
+* 현재 관리자 인증은 아직 적용하지 않았으므로 수동 크롤링 API는 로컬 검증용으로 사용합니다.
+
+### 2026-06-28
+
+* 식당별 저장 리뷰를 최신순으로 조회하는 `GET /api/restaurants/{restaurantId}/reviews` API를 추가했습니다.
+* 리뷰가 많아져도 한 번에 모두 읽지 않도록 `page`, `size` 기반 페이지 조회를 적용했습니다.
+* JPA Entity를 직접 응답하지 않고 `ReviewResponse`, `RestaurantReviewsResponse` DTO로 API 구조를 분리했습니다.
+* 존재하지 않는 식당 ID의 `404 Not Found` 처리를 관리자 API뿐 아니라 전체 API에서 공통 사용하도록 확장했습니다.
